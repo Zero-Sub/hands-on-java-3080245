@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 import javax.security.auth.login.LoginException;
 
+import bank.exception.AmountException;
+
 public class menu {
   
   private Scanner scanner;
@@ -11,15 +13,15 @@ public class menu {
   public static void main(String[] args){
     System.out.println("Welcome to Globe Bank International!");
 
-    Menu menu = new Menu();
+    menu menu = new menu();
     
     menu.scanner = new Scanner(System.in);
 
-    Customer Customer = menu.authenticateUser();
+    Customer customer = menu.authenticateUser();
 
-    if(Customer != null){
-      Account account = DataSource.getAccount(customer.getAccountId());
-      menu.showMenu(Customer, account);
+    if(customer != null){
+      Account account = DataSource.getAccount(customer.getAccoutId());
+      menu.showMenu(customer, account);
 
     }
   
@@ -33,7 +35,7 @@ public class menu {
     System.out.println("Please enter your username ");
     String username = scanner.next();
 
-    System.out.priontln("Please enter your password ");
+    System.out.println("Please enter your password ");
     String password = scanner.next();
 
     Customer customer = null;
@@ -65,7 +67,12 @@ public class menu {
         case 1: 
           System.out.println("How much would you like to deposit?");
           amount = scanner.nextDouble();
-          account.deposit(amount);
+          try{
+            account.deposit(amount);
+          }catch(AmountException e){
+            System.out.println(e.getMessage());
+            System.out.println("Please try again.");
+          }
           break;
         case 2:
           System.out.println("How much would you like to withdraw?");
