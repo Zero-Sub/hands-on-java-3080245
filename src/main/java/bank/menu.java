@@ -45,7 +45,7 @@ public class menu {
     return customer;
   }
 
-  private void showMenu(Customer customer, Account accoutn) {
+  private void showMenu(Customer customer, Account account) {
 
     int selection = 0;
 
